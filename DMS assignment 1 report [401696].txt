@@ -1,0 +1,9 @@
+I used tabu search in this assignment.
+My definition for neighbour is only one process changed to another machine. For example, say we have 5 processess and 3 machines.
+[0, 0, 1, 2, 2] is an assign. [0, 0, 1, 2, 1], [0, 0, 1, 2, 0] or [1, 0, 1, 2, 2], [2, 0, 1, 2, 2] are all neighbours of [0, 0, 1, 2, 2]. Namely, for every assign, there are N_p*(N_m-1) neighbours.
+But considering for very large instances, there are too many neighbours for an assign. Checking all of them takes too much time. Thus, I've used two tricks to accelerate the computing.
+The first trick is that to add a series of neighbour to tabu list, not only one at a time. For example, if current assign is [0, 0, 1, 2, 2]. And if I assign the first process to machine 1, namely, the assign becomes [1, 0, 1, 2, 2]. It's of course should be added to the tabu list. But what's more is, even [1, 1, 1, 2, 2], [1, 2, 1, 2, 2], [1, 0, 0, 2, 2] and many other neighbours are all added to the tabu list. This will reduce huge amount of neighbours that should be checked at each time.
+The second trick is when I was generating neighbours, I didn't generate all N_p*(N_m-1) neighbours. Instead, I only generate 0.1*N_p*(N_m-1) neighbours randomly! There are two reasons: 1.to reduce computing since we have less neighbours. 2. if we check all N_p*(N_m-1) neighbours, every time we run this algorithm we're guaranteed to get the same results since everything is deterministic. I consider this will reduce the randomness in the search. However, being random is a critical point to get out of local optimal point. And indeed, this trick improves the search a lot.
+
+
+I run my program on a compter of intel Pentium 4 processor of 2.0Ghz. The memory installed is 2.00 GB. The OS used is ubuntu 12.04. I run the instance of small/instance_1. And I got a result of 1352 in about 2 minutes.
